@@ -1,73 +1,296 @@
-# Welcome to your Lovable project
+Here’s a clean, professional **README.md** you can use for your Phase 1 MVP (No DB yet, DB-ready architecture).
 
-## Project info
+You can copy-paste this directly into your GitHub repo.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+# 🎬 Random Movie & TV Show Selector
 
-There are several ways of editing your application.
+A full-stack web application that helps users eliminate decision fatigue by randomly selecting a Movie or TV Show based on customizable filters such as rating, industry, and 18+ content.
 
-**Use Lovable**
+Built using React (Vite) + Node.js (Express) with integration to **The Movie Database (TMDB)**.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Features
 
-**Use your preferred IDE**
+### 🔍 Custom Filters
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* ⭐ Minimum IMDb rating (6–10)
+* 🌍 Industry selection:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+  * Bollywood
+  * Hollywood
+* 🎬 Content type:
 
-Follow these steps:
+  * Movie
+  * TV Show
+* 🔞 18+ content toggle
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 🎲 Smart Random Selection
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* Fetches multiple results from TMDB
+* Applies filters
+* Randomly selects one result
+* Avoids very low vote-count entries
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 📋 Detailed Movie Information
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+* Title
+* IMDb Rating
+* Runtime
+* Genres
+* Director
+* Top 5 Actors
+* Overview
+* Release Year
+* Poster Image
+* 18+ Badge (if applicable)
+
+---
+
+## 🏗 Architecture Overview
+
+This project follows a **clean service-layer architecture** designed to allow future database integration without refactoring routes.
+
+### Backend Structure
+
+```
+backend/
+│
+├── routes/
+├── controllers/
+├── services/
+│   ├── tmdb.service.js
+│   └── movie.service.js
+├── middleware/
+├── app.js
+└── .env
+```
+
+### Frontend Structure
+
+```
+frontend/
+│
+├── src/
+│   ├── components/
+│   │   ├── FilterPanel.jsx
+│   │   └── ResultCard.jsx
+│   ├── services/
+│   │   └── api.js
+│   ├── App.jsx
+│   └── main.jsx
+```
+
+---
+
+## 🧠 Technical Design
+
+### Backend
+
+* Node.js
+* Express.js
+* Axios
+* dotenv
+* Service layer abstraction
+* Error handling middleware
+* TMDB integration
+
+### Frontend
+
+* React (Vite)
+* Functional components
+* React Hooks
+* Axios
+* Dark cinematic theme
+* Responsive layout
+
+---
+
+## 📡 API Endpoints
+
+### Health Check
+
+```
+GET /api/health
+```
+
+Response:
+
+```
+{ "status": "ok" }
+```
+
+---
+
+### Generate Random Content
+
+```
+POST /api/generate
+```
+
+Request Body:
+
+```json
+{
+  "type": "movie",
+  "industry": "hollywood",
+  "minRating": 7,
+  "includeAdult": false
+}
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": 123,
+    "title": "Example Title",
+    "type": "movie",
+    "rating": 8.4,
+    "runtime": 142,
+    "genres": ["Drama", "Thriller"],
+    "director": "Director Name",
+    "actors": ["Actor 1", "Actor 2"],
+    "overview": "Summary...",
+    "poster_url": "image_url",
+    "release_year": "2022",
+    "isAdult": false
+  }
+}
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```
+git clone https://github.com/yourusername/random-movie-selector.git
+cd random-movie-selector
+```
+
+---
+
+### 2️⃣ Backend Setup
+
+```
+cd backend
+npm install
+```
+
+Create `.env` file:
+
+```
+TMDB_API_KEY=your_tmdb_api_key_here
+PORT=5000
+```
+
+Start server:
+
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Server runs on:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+http://localhost:5000
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 3️⃣ Frontend Setup
 
-## What technologies are used for this project?
+```
+cd frontend
+npm install
+npm run dev
+```
 
-This project is built with:
+Frontend runs on:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+http://localhost:5173
+```
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 🔮 Future Improvements (Planned)
 
-## Can I connect a custom domain to my Lovable project?
+This MVP is designed to support future enhancements:
 
-Yes, you can!
+* 🗄 Database integration (PostgreSQL / MongoDB)
+* 🎥 Actor & Director caching
+* 📊 Watch history tracking
+* ❤️ Watchlist feature
+* 🤖 Recommendation engine
+* 🔍 Avoid repeat suggestions
+* 🌐 Streaming platform filtering
+* 👥 Multi-user support
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🧱 Why No Database (Yet)?
+
+This version intentionally does not use a database to:
+
+* Validate API logic first
+* Keep MVP simple
+* Ensure clean architecture
+* Allow scalable integration later
+
+The `movie.service.js` layer is designed to allow seamless database addition without modifying routes.
+
+---
+
+## 🎯 Project Goals
+
+* Solve decision fatigue
+* Practice API integration
+* Implement clean backend architecture
+* Build scalable full-stack system
+* Prepare for recommendation system expansion
+
+---
+
+## 🛡 Content Filtering
+
+* Uses TMDB adult flag for 18+ filtering
+* Excludes low vote-count entries
+* Applies language and country filters for industry separation
+
+---
+
+## 📌 Tech Stack Summary
+
+| Layer       | Technology                |
+| ----------- | ------------------------- |
+| Frontend    | React (Vite)              |
+| Backend     | Node.js + Express         |
+| API         | TMDB                      |
+| HTTP Client | Axios                     |
+| Styling     | CSS / Tailwind (optional) |
+
+---
+
+## 👨‍💻 Author
+
+Your Name
+Full Stack Developer
+Movie Enthusiast 🎬
+
+---
+
+If you want, I can also generate:
+
+* ⭐ A more polished “portfolio-ready” README version
+* 📦 Version 2 README (with database)
+* 🚀 Deployment README (Render + Vercel)
+* 🧠 AI-recommendation upgraded version README
+
+Just tell me which version you want next.
