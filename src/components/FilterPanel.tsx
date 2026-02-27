@@ -65,9 +65,18 @@ const FilterPanel = ({ onGenerate, isLoading, onTypeChange }: FilterPanelProps) 
           step={0.5}
           className="w-full"
         />
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>6</span>
-          <span>10</span>
+        <div className="relative w-full h-5">
+          {[6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10].map((val) => (
+            <span
+              key={val}
+              className={`absolute text-xs -translate-x-1/2 transition-colors duration-300 ${
+                val === rating ? "text-theme-accent font-semibold" : "text-muted-foreground"
+              }`}
+              style={{ left: `${((val - 6) / 4) * 100}%` }}
+            >
+              {val % 1 === 0 ? val : "·"}
+            </span>
+          ))}
         </div>
       </div>
 
