@@ -1,9 +1,3 @@
-Here’s a clean, professional **README.md** you can use for your Phase 1 MVP (No DB yet, DB-ready architecture).
-
-You can copy-paste this directly into your GitHub repo.
-
----
-
 # 🎬 Random Movie & TV Show Selector
 
 A full-stack web application that helps users eliminate decision fatigue by randomly selecting a Movie or TV Show based on customizable filters such as rating, industry, and 18+ content.
@@ -285,12 +279,5 @@ Full Stack Developer
 Movie Enthusiast 🎬
 
 ---
-
-If you want, I can also generate:
-
-* ⭐ A more polished “portfolio-ready” README version
-* 📦 Version 2 README (with database)
-* 🚀 Deployment README (Render + Vercel)
-* 🧠 AI-recommendation upgraded version README
 
 Just tell me which version you want next.
