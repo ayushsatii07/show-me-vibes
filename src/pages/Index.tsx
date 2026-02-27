@@ -12,6 +12,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastFilters, setLastFilters] = useState<GenerateRequest | null>(null);
+  const [activeType, setActiveType] = useState<"movie" | "tv">("movie");
 
   const handleGenerate = useCallback(async (filters: GenerateRequest) => {
     setIsLoading(true);
@@ -40,7 +41,7 @@ const Index = () => {
   }, [lastFilters, handleGenerate]);
 
   return (
-    <div className="min-h-screen relative">
+    <div className={`min-h-screen relative ${activeType === "tv" ? "theme-tv" : ""}`}>
       {/* Film grain overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] animate-film-grain z-50"
         style={{
@@ -52,7 +53,7 @@ const Index = () => {
         <Header />
 
         <div className="space-y-8">
-          <FilterPanel onGenerate={handleGenerate} isLoading={isLoading} />
+          <FilterPanel onGenerate={handleGenerate} isLoading={isLoading} onTypeChange={setActiveType} />
 
           <AnimatePresence mode="wait">
             {isLoading && <LoadingSpinner key="loading" />}

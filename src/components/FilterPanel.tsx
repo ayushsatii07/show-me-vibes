@@ -17,12 +17,18 @@ import type { GenerateRequest } from "@/services/api";
 interface FilterPanelProps {
   onGenerate: (filters: GenerateRequest) => void;
   isLoading: boolean;
+  onTypeChange: (type: "movie" | "tv") => void;
 }
 
-const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
+const FilterPanel = ({ onGenerate, isLoading, onTypeChange }: FilterPanelProps) => {
   const [rating, setRating] = useState(7);
   const [industry, setIndustry] = useState<"bollywood" | "hollywood">("hollywood");
   const [type, setType] = useState<"movie" | "tv">("movie");
+
+  const handleTypeChange = (newType: "movie" | "tv") => {
+    setType(newType);
+    onTypeChange(newType);
+  };
   const [isAdult, setIsAdult] = useState(false);
 
   const handleGenerate = () => {
@@ -37,7 +43,7 @@ const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
       className="glass rounded-xl p-6 md:p-8 space-y-6"
     >
       <div className="flex items-center gap-3 mb-2">
-        <Clapperboard className="w-6 h-6 text-gold" />
+        <Clapperboard className="w-6 h-6 text-theme-accent" />
         <h2 className="font-display text-2xl tracking-wider text-foreground">
           PICK YOUR VIBE
         </h2>
@@ -49,7 +55,7 @@ const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
           <Label className="text-sm font-medium text-muted-foreground">
             Minimum Rating
           </Label>
-          <span className="text-gold font-display text-2xl">{rating}</span>
+          <span className="text-theme-accent font-display text-2xl">{rating}</span>
         </div>
         <Slider
           value={[rating]}
@@ -91,7 +97,7 @@ const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
               variant={type === "movie" ? "default" : "outline"}
               size="sm"
               className="flex-1 gap-2"
-              onClick={() => setType("movie")}
+              onClick={() => handleTypeChange("movie")}
             >
               <Film className="w-4 h-4" />
               Movie
@@ -100,7 +106,7 @@ const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
               variant={type === "tv" ? "default" : "outline"}
               size="sm"
               className="flex-1 gap-2"
-              onClick={() => setType("tv")}
+              onClick={() => handleTypeChange("tv")}
             >
               <Tv className="w-4 h-4" />
               TV Show
@@ -122,7 +128,7 @@ const FilterPanel = ({ onGenerate, isLoading }: FilterPanelProps) => {
         onClick={handleGenerate}
         disabled={isLoading}
         size="lg"
-        className="w-full gap-2 font-display text-lg tracking-wider animate-pulse-gold"
+        className="w-full gap-2 font-display text-lg tracking-wider animate-pulse-accent"
       >
         <Sparkles className="w-5 h-5" />
         {isLoading ? "FINDING..." : "GENERATE"}

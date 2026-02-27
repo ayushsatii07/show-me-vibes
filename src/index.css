@@ -53,8 +53,22 @@
     --adult-badge: 0 72% 51%;
     --cinema-gradient: linear-gradient(135deg, hsl(230 15% 8%) 0%, hsl(230 20% 4%) 100%);
     --card-gradient: linear-gradient(160deg, hsl(230 14% 14%) 0%, hsl(230 14% 10%) 100%);
-    --glow-gold: 0 0 30px hsl(38 95% 55% / 0.15);
-    --glow-gold-strong: 0 0 60px hsl(38 95% 55% / 0.25);
+    --glow-accent: 0 0 30px hsl(38 95% 55% / 0.15);
+    --glow-accent-strong: 0 0 60px hsl(38 95% 55% / 0.25);
+
+    /* Dynamic theme accent — overridden by .theme-tv */
+    --theme-accent: 38 95% 55%;
+    --theme-accent-dim: 38 60% 40%;
+  }
+
+  .theme-tv {
+    --theme-accent: 142 70% 45%;
+    --theme-accent-dim: 142 50% 32%;
+    --primary: 142 70% 45%;
+    --accent: 142 70% 45%;
+    --ring: 142 70% 45%;
+    --glow-accent: 0 0 30px hsl(142 70% 45% / 0.15);
+    --glow-accent-strong: 0 0 60px hsl(142 70% 45% / 0.25);
   }
 }
 
@@ -82,16 +96,16 @@
     border: 1px solid hsl(var(--border) / 0.5);
   }
 
-  .glow-gold {
-    box-shadow: var(--glow-gold);
+  .glow-accent {
+    box-shadow: var(--glow-accent);
   }
 
-  .glow-gold-strong {
-    box-shadow: var(--glow-gold-strong);
+  .glow-accent-strong {
+    box-shadow: var(--glow-accent-strong);
   }
 
-  .text-gold {
-    color: hsl(var(--gold));
+  .text-theme-accent {
+    color: hsl(var(--theme-accent));
   }
 
   .bg-surface {
