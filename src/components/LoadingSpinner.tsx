@@ -12,7 +12,7 @@ const LoadingSpinner = () => {
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       >
-        <Film className="w-12 h-12 text-gold" />
+        <Film className="w-12 h-12 text-theme-accent" />
       </motion.div>
       <p className="text-muted-foreground font-display text-xl tracking-wider">
         ROLLING THE REEL...

@@ -46,7 +46,7 @@ const ResultCard = ({ data, onRegenerate, isLoading }: ResultCardProps) => {
               {data.title}
             </h2>
             <div className="flex flex-wrap items-center gap-3 mt-2">
-              <div className="flex items-center gap-1 text-gold">
+              <div className="flex items-center gap-1 text-theme-accent">
                 <Star className="w-4 h-4 fill-current" />
                 <span className="font-semibold">{data.rating}</span>
               </div>
@@ -72,7 +72,7 @@ const ResultCard = ({ data, onRegenerate, isLoading }: ResultCardProps) => {
 
           {/* Director */}
           <div className="flex items-start gap-2">
-            <Megaphone className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+            <Megaphone className="w-4 h-4 text-theme-accent mt-0.5 flex-shrink-0" />
             <div>
               <span className="text-xs text-muted-foreground uppercase tracking-wider">
                 Director
@@ -83,7 +83,7 @@ const ResultCard = ({ data, onRegenerate, isLoading }: ResultCardProps) => {
 
           {/* Actors */}
           <div className="flex items-start gap-2">
-            <Users className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+            <Users className="w-4 h-4 text-theme-accent mt-0.5 flex-shrink-0" />
             <div>
               <span className="text-xs text-muted-foreground uppercase tracking-wider">
                 Cast
