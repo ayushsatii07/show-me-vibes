@@ -5,6 +5,8 @@ import FilterPanel from "@/components/FilterPanel";
 import ResultCard from "@/components/ResultCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorState from "@/components/ErrorState";
+import WatchlistSidebar from "@/components/WatchlistSidebar";
+import { useWatchlist } from "@/hooks/use-watchlist";
 import { generateRecommendation, type GenerateRequest, type GenerateResponse } from "@/services/api";
 
 const Index = () => {
@@ -13,6 +15,9 @@ const Index = () => {
   const [error, setError] = useState<string | null>(null);
   const [lastFilters, setLastFilters] = useState<GenerateRequest | null>(null);
   const [activeType, setActiveType] = useState<"movie" | "tv">("movie");
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
+
+  const { watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist, clearWatchlist } = useWatchlist();
 
   const handleGenerate = useCallback(async (filters: GenerateRequest) => {
     setIsLoading(true);
@@ -49,6 +54,14 @@ const Index = () => {
         }}
       />
 
+      <WatchlistSidebar
+        isOpen={watchlistOpen}
+        onToggle={() => setWatchlistOpen((o) => !o)}
+        watchlist={watchlist}
+        onRemove={removeFromWatchlist}
+        onClear={clearWatchlist}
+      />
+
       <div className="container max-w-4xl mx-auto px-4 pb-12 relative z-10">
         <Header />
 
@@ -72,6 +85,8 @@ const Index = () => {
                 data={result}
                 onRegenerate={handleRegenerate}
                 isLoading={isLoading}
+                onAddToWatchlist={addToWatchlist}
+                isInWatchlist={isInWatchlist(result.title)}
               />
             )}
           </AnimatePresence>
