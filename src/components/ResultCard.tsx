@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Clock, Users, Megaphone, RefreshCw, AlertTriangle } from "lucide-react";
+import { Star, Clock, Users, Megaphone, RefreshCw, AlertTriangle, Bookmark, BookmarkCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { GenerateResponse } from "@/services/api";
@@ -8,9 +8,11 @@ interface ResultCardProps {
   data: GenerateResponse;
   onRegenerate: () => void;
   isLoading: boolean;
+  onAddToWatchlist: (item: GenerateResponse) => void;
+  isInWatchlist: boolean;
 }
 
-const ResultCard = ({ data, onRegenerate, isLoading }: ResultCardProps) => {
+const ResultCard = ({ data, onRegenerate, isLoading, onAddToWatchlist, isInWatchlist }: ResultCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -97,16 +99,36 @@ const ResultCard = ({ data, onRegenerate, isLoading }: ResultCardProps) => {
             {data.overview}
           </p>
 
-          {/* Regenerate */}
-          <Button
-            onClick={onRegenerate}
-            disabled={isLoading}
-            variant="outline"
-            className="gap-2 mt-2"
-          >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-            Regenerate
-          </Button>
+          {/* Actions */}
+          <div className="flex gap-3 mt-2">
+            <Button
+              onClick={onRegenerate}
+              disabled={isLoading}
+              variant="outline"
+              className="gap-2"
+            >
+              <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
+              Regenerate
+            </Button>
+            <Button
+              onClick={() => onAddToWatchlist(data)}
+              variant={isInWatchlist ? "secondary" : "default"}
+              className="gap-2"
+              disabled={isInWatchlist}
+            >
+              {isInWatchlist ? (
+                <>
+                  <BookmarkCheck className="w-4 h-4" />
+                  Saved
+                </>
+              ) : (
+                <>
+                  <Bookmark className="w-4 h-4" />
+                  Watchlist
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </motion.div>
