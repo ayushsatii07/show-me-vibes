@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { AlertCircle, RefreshCw, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ErrorStateProps {
   message: string;
   onRetry: () => void;
+  onChangeFilters?: () => void;
 }
 
-const ErrorState = ({ message, onRetry }: ErrorStateProps) => {
+const ErrorState = ({ message, onRetry, onChangeFilters }: ErrorStateProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -21,10 +22,18 @@ const ErrorState = ({ message, onRetry }: ErrorStateProps) => {
       <p className="text-sm text-muted-foreground max-w-md mx-auto">
         {message}
       </p>
-      <Button onClick={onRetry} variant="outline" className="gap-2">
-        <RefreshCw className="w-4 h-4" />
-        Try Again
-      </Button>
+      <div className="flex items-center justify-center gap-3">
+        <Button onClick={onRetry} variant="outline" className="gap-2">
+          <RefreshCw className="w-4 h-4" />
+          Try Again
+        </Button>
+        {onChangeFilters && (
+          <Button onClick={onChangeFilters} variant="default" className="gap-2">
+            <SlidersHorizontal className="w-4 h-4" />
+            Change Rating
+          </Button>
+        )}
+      </div>
     </motion.div>
   );
 };

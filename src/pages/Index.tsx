@@ -6,6 +6,7 @@ import ResultCard from "@/components/ResultCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorState from "@/components/ErrorState";
 import WatchlistSidebar from "@/components/WatchlistSidebar";
+import WatchedSidebar from "@/components/WatchedSidebar";
 import { useWatchlist } from "@/hooks/use-watchlist";
 import { generateRecommendation, type GenerateRequest, type GenerateResponse } from "@/services/api";
 
@@ -16,6 +17,7 @@ const Index = () => {
   const [lastFilters, setLastFilters] = useState<GenerateRequest | null>(null);
   const [activeType, setActiveType] = useState<"movie" | "tv">("movie");
   const [watchlistOpen, setWatchlistOpen] = useState(false);
+  const [watchedOpen, setWatchedOpen] = useState(false);
 
   const { watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist, clearWatchlist } = useWatchlist();
 
@@ -45,6 +47,15 @@ const Index = () => {
     }
   }, [lastFilters, handleGenerate]);
 
+  const handleBack = useCallback(() => {
+    setResult(null);
+    setError(null);
+  }, []);
+
+  // Determine which view to show
+  const showResult = result && !isLoading && !error;
+  const showFilters = !showResult && !isLoading && !error;
+
   return (
     <div className={`min-h-screen relative ${activeType === "tv" ? "theme-tv" : ""}`}>
       {/* Film grain overlay */}
@@ -62,12 +73,12 @@ const Index = () => {
         onClear={clearWatchlist}
       />
 
+      <WatchedSidebar isOpen={watchedOpen} onToggle={() => setWatchedOpen((o) => !o)} />
+
       <div className="container max-w-4xl mx-auto px-4 pb-12 relative z-10">
-        <Header />
+        <Header onWatchedToggle={() => setWatchedOpen((o) => !o)} />
 
         <div className="space-y-8">
-          <FilterPanel onGenerate={handleGenerate} isLoading={isLoading} onTypeChange={setActiveType} />
-
           <AnimatePresence mode="wait">
             {isLoading && <LoadingSpinner key="loading" />}
 
@@ -76,10 +87,20 @@ const Index = () => {
                 key="error"
                 message={error}
                 onRetry={handleRegenerate}
+                onChangeFilters={handleBack}
               />
             )}
 
-            {result && !isLoading && !error && (
+            {showFilters && (
+              <FilterPanel
+                key="filters"
+                onGenerate={handleGenerate}
+                isLoading={isLoading}
+                onTypeChange={setActiveType}
+              />
+            )}
+
+            {showResult && (
               <ResultCard
                 key={result.title}
                 data={result}
@@ -87,10 +108,30 @@ const Index = () => {
                 isLoading={isLoading}
                 onAddToWatchlist={addToWatchlist}
                 isInWatchlist={isInWatchlist(result.title)}
+                onBack={handleBack}
               />
             )}
           </AnimatePresence>
         </div>
+
+        {/* TMDB Attribution */}
+        <footer className="mt-12 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            <img
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+              alt="TMDB Logo"
+              className="h-5"
+            />
+          </a>
+          <p className="text-xs text-muted-foreground text-center">
+            This product uses the TMDB API but is not endorsed or certified by TMDB.
+          </p>
+        </footer>
       </div>
     </div>
   );

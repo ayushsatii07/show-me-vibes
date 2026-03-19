@@ -39,7 +39,8 @@ const FilterPanel = ({ onGenerate, isLoading, onTypeChange }: FilterPanelProps) 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      exit={{ opacity: 0, y: -30, scale: 0.97 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       className="glass rounded-xl p-6 md:p-8 space-y-6"
     >
       <div className="flex items-center gap-3 mb-2">
@@ -69,9 +70,8 @@ const FilterPanel = ({ onGenerate, isLoading, onTypeChange }: FilterPanelProps) 
           {[6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10].map((val) => (
             <span
               key={val}
-              className={`absolute text-xs -translate-x-1/2 transition-colors duration-300 ${
-                val === rating ? "text-theme-accent font-semibold" : "text-muted-foreground"
-              }`}
+              className={`absolute text-xs -translate-x-1/2 transition-colors duration-300 ${val === rating ? "text-theme-accent font-semibold" : "text-muted-foreground"
+                }`}
               style={{ left: `${((val - 6) / 4) * 100}%` }}
             >
               {val % 1 === 0 ? val : "·"}
